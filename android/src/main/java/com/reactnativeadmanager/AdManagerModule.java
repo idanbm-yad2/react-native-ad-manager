@@ -12,6 +12,10 @@ import com.facebook.react.module.annotations.ReactModule;
 public class AdManagerModule extends ReactContextBaseJavaModule {
     public static final String NAME = "AdManager";
 
+    public static native int nativeMultiply(int a, int b);
+
+    private static native void initialize(long jsiPtr, String docDir);
+
     public AdManagerModule(ReactApplicationContext reactContext) {
         super(reactContext);
     }
@@ -22,13 +26,13 @@ public class AdManagerModule extends ReactContextBaseJavaModule {
         return NAME;
     }
 
-    static {
-        try {
-            // Used to load the 'native-lib' library on application startup.
-            System.loadLibrary("cpp");
-        } catch (Exception ignored) {
-        }
-    }
+    // static {
+    // try {
+    // // Used to load the 'native-lib' library on application startup.
+    // System.loadLibrary("cpp");
+    // } catch (Exception ignored) {
+    // }
+    // }
 
     // Example method
     // See https://reactnative.dev/docs/native-modules-android
@@ -37,5 +41,18 @@ public class AdManagerModule extends ReactContextBaseJavaModule {
         promise.resolve(nativeMultiply(a, b));
     }
 
-    public static native int nativeMultiply(int a, int b);
+    @ReactMethod(isBlockingSynchronousMethod = true)
+    public boolean install() {
+        try {
+            System.loadLibrary(NAME);
+
+            ReactApplicationContext context = getReactApplicationContext();
+            initialize(
+                    context.getJavaScriptContextHolder().get(),
+                    context.getFilesDir().getAbsolutePath());
+            return true;
+        } catch (Exception exception) {
+            return false;
+        }
+    }
 }
