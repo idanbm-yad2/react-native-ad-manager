@@ -11,11 +11,11 @@ npm install react-native-ad-manager
 ## Usage
 
 ```js
-import { multiply } from "react-native-ad-manager";
+import { helloWorld } from 'react-native-ad-manager';
 
 // ...
 
-const result = await multiply(3, 7);
+const result = helloWorld();
 ```
 
 ## Contributing
@@ -25,4 +25,5 @@ See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the 
 ## License
 
 MIT
+
 # react-native-ad-manager
