@@ -1,12 +1,14 @@
 import * as React from 'react';
 
 import { StyleSheet, View, Text } from 'react-native';
-import { helloWorld } from 'react-native-ad-manager';
+import { HelloWorld } from 'react-native-ad-manager';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Result: {helloWorld()}</Text>
+      <Text>
+        Result: <HelloWorld />
+      </Text>
     </View>
   );
 }

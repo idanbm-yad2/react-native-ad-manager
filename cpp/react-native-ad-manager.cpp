@@ -4,10 +4,6 @@
 using namespace facebook::jsi;
 using namespace std;
 
-int multiply(float a, float b)
-{
-	return a * b;
-}
 void installExample(Runtime &jsiRuntime)
 {
 	auto helloWorld = Function::createFromHostFunction(jsiRuntime,
@@ -19,7 +15,7 @@ void installExample(Runtime &jsiRuntime)
 														  const Value *arguments,
 														  size_t count) -> Value
 													   {
-														   string helloworld = "hello world";
+														   string helloworld = "Hello World";
 
 														   return Value(runtime,
 																		String::createFromUtf8(

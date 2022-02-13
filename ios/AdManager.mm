@@ -1,19 +1,43 @@
 #import "AdManager.h"
 #import "react-native-ad-manager.h"
+#import <jsi/jsi.h>
+#import <React/RCTUtils.h>
+#import <React/RCTBridge+Private.h>
+#import <sys/utsname.h>
+
+using namespace facebook::jsi;
+using namespace std;
 
 @implementation AdManager
 
+@synthesize bridge = _bridge;
+@synthesize methodQueue = _methodQueue;
+
 RCT_EXPORT_MODULE()
 
-// Example method for C++
-// See the implementation of the example module in the `cpp` folder
-RCT_EXPORT_METHOD(multiply:(nonnull NSNumber*)a withB:(nonnull NSNumber*)b
-                  withResolver:(RCTPromiseResolveBlock)resolve
-                  withReject:(RCTPromiseRejectBlock)reject)
-{
-    NSNumber *result = @(example::multiply([a floatValue], [b floatValue]));
-
-    resolve(result);
++ (BOOL)requiresMainQueueSetup {
+    return YES;
 }
+
+// Installing JSI Bindings as done by
+// https://github.com/mrousavy/react-native-mmkv
+RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(install)
+{
+    RCTBridge* bridge = [RCTBridge currentBridge];
+    RCTCxxBridge* cxxBridge = (RCTCxxBridge*)bridge;
+    if (cxxBridge == nil) {
+        return @false;
+    }
+
+    auto jsiRuntime = (Runtime*) cxxBridge.runtime;
+    if (jsiRuntime == nil) {
+        return @false;
+    }
+
+    installExample(*(Runtime *)cxxBridge.runtime);
+   
+    return @true;
+}
+
 
 @end

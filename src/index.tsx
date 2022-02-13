@@ -1,3 +1,4 @@
+import type { FC } from 'react';
 import { NativeModules } from 'react-native';
 
 // const LINKING_ERROR =
@@ -25,6 +26,6 @@ if (AdManagerModule && typeof AdManagerModule.install === 'function') {
   AdManagerModule.install();
 }
 
-export const helloWorld = (): string => {
-  return g.helloWorld();
-};
+type HelloWorldProps = {};
+
+export const HelloWorld: FC<HelloWorldProps> = () => g.helloWorld();
